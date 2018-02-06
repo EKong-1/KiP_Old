@@ -1,8 +1,12 @@
 package com.example.elvin.myapplication;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Elvin on 2/1/2018.
@@ -48,5 +52,81 @@ public class DBHandler extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_INSTRUCTS);
         // Creating tables again
         onCreate(db);
+    }
+
+    // Adding new Recipe
+    public void addRecipe(Recipe recipe) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, recipe.getName()); // Recipe Name
+        values.put(KEY_INSTRUCT_ID, recipe.getInstructID()); // ID that points to Recipe Instructions
+        // Inserting Row
+        db.insert(TABLE_RECIPES, null, values);
+        db.close(); // Closing database connection
+    }
+
+    // Getting one Recipe by id
+    public Recipe getRecipe(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_RECIPES, new String[] {KEY_ID, KEY_NAME, KEY_INSTRUCT_ID}, KEY_ID + "=?",
+                new String[] {String.valueOf(id)}, null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        Recipe contact = new Recipe(Integer.parseInt(cursor.getString(0)),
+                cursor.getString(1), cursor.getString(2));
+        // return recipe
+        return contact;
+    }
+
+    // Getting All Recipes
+    public List<Recipe> getAllRecipes() {
+        List<Recipe> recipeList = new ArrayList<Recipe>();
+        // Select All Query
+        String selectQuery = "SELECT * FROM " + TABLE_RECIPES;
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Recipe recipe = new Recipe();
+                recipe.setId(Integer.parseInt(cursor.getString(0)));
+                recipe.setName(cursor.getString(1));
+                recipe.setInstructID(cursor.getString(2));
+                // Adding contact to list
+                recipeList.add(recipe);
+            } while (cursor.moveToNext());
+        }
+        // return contact list
+        return recipeList;
+    }
+
+    // Getting recipes Count
+    public int getRecipesCount() {
+        String countQuery = "SELECT * FROM " + TABLE_RECIPES;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        cursor.close();
+        // return count
+        return cursor.getCount();
+    }
+
+    // Updating a recipe
+    public int updateRecipe(Recipe recipe) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_NAME, recipe.getName());
+        values.put(KEY_INSTRUCT_ID, recipe.getInstructID());
+        // updating row
+        return db.update(TABLE_RECIPES, values, KEY_ID + " = ?",
+                new String[]{String.valueOf(recipe.getId())});
+    }
+
+    // Deleting a recipe
+    public void deleteRecipe(Recipe recipe) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_RECIPES, KEY_ID + " = ?",
+                new String[] { String.valueOf(recipe.getId()) });
+        db.close();
     }
 }
