@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.util.Log;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final String EXTRA_MESSAGE = "com.example.elvin.myapplication.MESSAGE";
@@ -17,6 +20,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        DBHandler db = new DBHandler(this);
+        Log.d("Insert: ", "Inserting ..");
+        db.addRecipe(new Recipe(1, "PB&J", "0001"));
+        db.addRecipe(new Recipe(2, "Cereal", "0002"));
+        db.addRecipe(new Recipe(3, "Toast", "0003"));
+        db.addRecipe(new Recipe(4, "Scrambled Eggs", "0004"));
+
+        Log.d("Reading: ", "Reading all recipes ..");
+        List<Recipe> recipes = db.getAllRecipes();
+
+        for (Recipe recipe: recipes) {
+            String log = "Id: " + recipe.getId() + ", Name: " + recipe.getName() + ", InstructID: " + recipe.getInstructID();
+            Log.d("Shop: ", log);
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -28,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+
     }
 
     @Override
