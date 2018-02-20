@@ -54,7 +54,7 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addInstruct()
+    public void addInstruct(){}
 
     // Adding new Recipe
     public void addRecipe(Recipe recipe) {
