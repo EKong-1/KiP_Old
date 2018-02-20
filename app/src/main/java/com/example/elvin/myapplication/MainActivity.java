@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DBHandler db = new DBHandler(this);
+        db.onUpgrade(db.getWritableDatabase(), 0, 1);
         Log.d("Insert: ", "Inserting ..");
         db.addRecipe(new Recipe(1, "PB&J", "0001"));
         db.addRecipe(new Recipe(2, "Cereal", "0002"));
