@@ -37,22 +37,24 @@ public class DBHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_INSTRUCT_ID + " INTEGER" + ")";
 
-//        String CREATE_INSTRUCTS_TABLE = "CREATE TABLE " + TABLE_INSTRUCTS + "("
-//                + KEY_INSTRUCT_ID + " INTEGER PRIMARY KEY," + KEY_INSTRUCTION + " TEXT,"
-//                + KEY_TIME_STAMP + " TEXT,FOREGIN KEY(" + KEY_INSTRUCT_ID +") REFERENCES "
-//                + TABLE_RECIPES + "(" + KEY_INSTRUCT_ID + "))";
+        String CREATE_INSTRUCTS_TABLE = "CREATE TABLE " + TABLE_INSTRUCTS + "("
+                + KEY_INSTRUCT_ID + " INTEGER PRIMARY KEY," + KEY_INSTRUCTION + " TEXT,"
+                + KEY_TIME_STAMP + " TEXT,FOREGIN KEY(" + KEY_INSTRUCT_ID +") REFERENCES "
+                + TABLE_RECIPES + "(" + KEY_INSTRUCT_ID + "))";
 
         db.execSQL(CREATE_RECIPE_TABLE);
-//        db.execSQL(CREATE_INSTRUCTS_TABLE);
+        db.execSQL(CREATE_INSTRUCTS_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_RECIPES);
-//        db.execSQL("DROP TABLE IF EXISTS " + TABLE_INSTRUCTS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_INSTRUCTS);
         // Creating tables again
         onCreate(db);
     }
+
+    public void addInstruct()
 
     // Adding new Recipe
     public void addRecipe(Recipe recipe) {
