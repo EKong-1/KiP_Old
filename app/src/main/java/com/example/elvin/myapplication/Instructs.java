@@ -6,6 +6,8 @@ import java.util.Arrays;
  * Created by Elvin on 2/20/2018.
  */
 
+// Change time stamps to int (seconds)
+
 public class Instructs {
     private int instructID;
     private ArrayList<String> instructList;
@@ -13,10 +15,10 @@ public class Instructs {
 
 
     public Instructs() {}
-    public Instructs(int instructID, String[] instructs, String[] times) {
+    public Instructs(int instructID) {
         this.instructID = instructID;
-        this.instructList = new ArrayList<String>(Arrays.asList(instructs));
-        this.timeStampList = new ArrayList<String>(Arrays.asList(times));
+        this.instructList = new ArrayList<String>();
+        this.timeStampList = new ArrayList<String>();
 
     }
 

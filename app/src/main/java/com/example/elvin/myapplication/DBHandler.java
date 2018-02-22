@@ -54,7 +54,22 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addInstruct(){}
+    // Adding new Instructions for one Recipe
+    public void addInstruct(Instructs instruct) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        int id = instruct.getInstructID();
+        ArrayList<String> ins = instruct.getInstructs();
+        ArrayList<String> times = instruct.getTimes();
+
+        for (int i = 0; i < ins.size(); i++) {
+            values.put(KEY_INSTRUCT_ID, id));
+            values.put(KEY_INSTRUCTION, ins.get(i));
+            values.put(KEY_TIME_STAMP, times.get(i));
+            db.insert(TABLE_INSTRUCTS, null, values);
+            values.clear();
+        }
+    }
 
     // Adding new Recipe
     public void addRecipe(Recipe recipe) {
@@ -65,6 +80,23 @@ public class DBHandler extends SQLiteOpenHelper {
         // Inserting Row
         db.insert(TABLE_RECIPES, null, values);
         db.close(); // Closing database connection
+    }
+
+    // Getting Instructions for one Recipe by instuct_id
+    public Instructs getInstructs(int instruct_id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(TABLE_INSTRUCTS, new String[] {KEY_INSTRUCT_ID, KEY_INSTRUCTION, KEY_TIME_STAMP},
+                KEY_INSTRUCT_ID + "=?", new String[] {String.valueOf(instruct_id)},
+                null, null, null, null);
+        if (cursor != null) {
+            cursor.moveToFirst();
+        }
+        Instructs inst = new Instructs(instruct_id);
+        while (cursor != null) {
+            inst.addInstruct(cursor.getString(1), cursor.getString(2));
+            cursor.moveToNext();
+        }
+        return inst;
     }
 
     // Getting one Recipe by id
@@ -112,6 +144,14 @@ public class DBHandler extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
+//
+//    // Updating instructions
+//    public int updateInstructs(Instructs instruct) {
+//        SQLiteDatabase db = this.getWritableDatabase();
+//        ContentValues values = new ContentValues();
+//
+//        return 0;
+//    }
 
     // Updating a recipe
     public int updateRecipe(Recipe recipe) {
