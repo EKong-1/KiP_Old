@@ -1,4 +1,4 @@
-package com.example.elvin.myapplication;
+package test1.kip_test;
 
 import org.junit.Test;
 

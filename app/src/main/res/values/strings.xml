@@ -1,6 +1,12 @@
 <resources>
-    <string name="app_name">My Application</string>
-    <string name="action_settings">Settings</string>
-    <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    <string name="app_name">Fuck Dis Shit</string>
+    <string name="title_home">Add Ingredients</string>
+    <string name="title_dashboard">Clear All</string>
+    <string name="title_notifications">Recipe Selection</string>
+    <string name="title_activity_add_ingredient_menu">AddIngredientMenu</string>
+    <string name="enter_ing_name">Enter Ingredient Name </string>
+    <string name="enter_ing_mass">Enter Ingredient Mass (in Grams)</string>
+    <string name="add_ing_done">Add Ingredient and Return to Ingredient Selection Menu</string>
+    <string name="add_ing_again">Add Ingredient</string>
+    <string name="return_ingSelect">Return to Ingredient Selection Menu</string>
 </resources>

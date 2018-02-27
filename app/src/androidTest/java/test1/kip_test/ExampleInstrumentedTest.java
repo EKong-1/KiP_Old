@@ -1,4 +1,4 @@
-package com.example.elvin.myapplication;
+package test1.kip_test;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.example.elvin.myapplication", appContext.getPackageName());
+        assertEquals("test1.kip_test", appContext.getPackageName());
     }
 }
