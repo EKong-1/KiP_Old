@@ -39,7 +39,7 @@ public class DBHandler extends SQLiteOpenHelper {
 
         String CREATE_INSTRUCTS_TABLE = "CREATE TABLE " + TABLE_INSTRUCTS + "("
                 + KEY_INSTRUCT_ID + " INTEGER PRIMARY KEY," + KEY_INSTRUCTION + " TEXT,"
-                + KEY_TIME_STAMP + " TEXT,FOREGIN KEY(" + KEY_INSTRUCT_ID +") REFERENCES "
+                + KEY_TIME_STAMP + " INTEGER,FOREGIN KEY(" + KEY_INSTRUCT_ID +") REFERENCES "
                 + TABLE_RECIPES + "(" + KEY_INSTRUCT_ID + "))";
 
         db.execSQL(CREATE_RECIPE_TABLE);
@@ -60,10 +60,10 @@ public class DBHandler extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         int id = instruct.getInstructID();
         ArrayList<String> ins = instruct.getInstructs();
-        ArrayList<String> times = instruct.getTimes();
+        ArrayList<Integer> times = instruct.getTimes();
 
         for (int i = 0; i < ins.size(); i++) {
-            values.put(KEY_INSTRUCT_ID, id));
+            values.put(KEY_INSTRUCT_ID, id);
             values.put(KEY_INSTRUCTION, ins.get(i));
             values.put(KEY_TIME_STAMP, times.get(i));
             db.insert(TABLE_INSTRUCTS, null, values);
@@ -93,7 +93,7 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         Instructs inst = new Instructs(instruct_id);
         while (cursor != null) {
-            inst.addInstruct(cursor.getString(1), cursor.getString(2));
+            inst.addInstruct(cursor.getString(1), Integer.parseInt(cursor.getString(2)));
             cursor.moveToNext();
         }
         return inst;
@@ -108,7 +108,7 @@ public class DBHandler extends SQLiteOpenHelper {
             cursor.moveToFirst();
         }
         Recipe contact = new Recipe(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2));
+                cursor.getString(1), Integer.parseInt(cursor.getString(2)));
         // return recipe
         return contact;
     }
@@ -126,7 +126,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 Recipe recipe = new Recipe();
                 recipe.setId(Integer.parseInt(cursor.getString(0)));
                 recipe.setName(cursor.getString(1));
-                recipe.setInstructID(cursor.getString(2));
+                recipe.setInstructID(Integer.parseInt(cursor.getString(2)));
                 // Adding contact to list
                 recipeList.add(recipe);
             } while (cursor.moveToNext());
@@ -144,14 +144,12 @@ public class DBHandler extends SQLiteOpenHelper {
         // return count
         return cursor.getCount();
     }
-//
-//    // Updating instructions
-//    public int updateInstructs(Instructs instruct) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//
-//        return 0;
-//    }
+
+    // Updating instructions
+    public void updateInstructs(Instructs instruct) {
+        this.deleteInstructs(instruct);
+        this.addInstruct(instruct);
+    }
 
     // Updating a recipe
     public int updateRecipe(Recipe recipe) {
@@ -162,6 +160,14 @@ public class DBHandler extends SQLiteOpenHelper {
         // updating row
         return db.update(TABLE_RECIPES, values, KEY_ID + " = ?",
                 new String[]{String.valueOf(recipe.getId())});
+    }
+
+    // Deleting Instructions
+    public void deleteInstructs(Instructs instruct) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_INSTRUCTS, KEY_INSTRUCT_ID + " = ?",
+                new String[] { String.valueOf(instruct.getInstructID()) });
+        db.close();
     }
 
     // Deleting a recipe

@@ -7,10 +7,10 @@ package com.example.elvin.myapplication;
 public class Recipe {
     private int id;
     private String name;
-    private String instructID;
+    private int instructID;
 
     public Recipe() {}
-    public Recipe(int id, String name, String instructID) {
+    public Recipe(int id, String name, int instructID) {
         this.id = id;
         this.name = name;
         this.instructID = instructID;
@@ -22,7 +22,7 @@ public class Recipe {
     public void setName(String name) {
         this.name = name;
     }
-    public void setInstructID(String instructID) {
+    public void setInstructID(int instructID) {
         this.instructID = instructID;
     }
 
@@ -32,7 +32,7 @@ public class Recipe {
     public String getName() {
         return name;
     }
-    public String getInstructID() {
+    public int getInstructID() {
         return instructID;
     }
 }

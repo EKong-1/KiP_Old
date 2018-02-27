@@ -11,21 +11,27 @@ import java.util.Arrays;
 public class Instructs {
     private int instructID;
     private ArrayList<String> instructList;
-    private ArrayList<String> timeStampList;
+    private ArrayList<Integer> timeStampList;
 
 
     public Instructs() {}
     public Instructs(int instructID) {
         this.instructID = instructID;
         this.instructList = new ArrayList<String>();
-        this.timeStampList = new ArrayList<String>();
+        this.timeStampList = new ArrayList<Integer>();
+
+    }
+    public Instructs(int instructID, String[] instr, Integer[] times) {
+        this.instructID = instructID;
+        this.instructList = new ArrayList<String>(Arrays.asList(instr));
+        this.timeStampList = new ArrayList<Integer>(Arrays.asList(times));
 
     }
 
     public void setInstructID(int instructID) {
         this.instructID = instructID;
     }
-    public void addInstruct(String i, String tS) {
+    public void addInstruct(String i, int tS) {
         this.instructList.add(i);
         this.timeStampList.add(tS);
     }
@@ -34,5 +40,5 @@ public class Instructs {
         return this.instructID;
     }
     public ArrayList<String> getInstructs() { return instructList; }
-    public ArrayList<String> getTimes() { return timeStampList; }
+    public ArrayList<Integer> getTimes() { return timeStampList; }
 }

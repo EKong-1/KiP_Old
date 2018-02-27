@@ -23,10 +23,10 @@ public class MainActivity extends AppCompatActivity {
         DBHandler db = new DBHandler(this);
         db.onUpgrade(db.getWritableDatabase(), 0, 1);
         Log.d("Insert: ", "Inserting ..");
-        db.addRecipe(new Recipe(1, "PB&J", "0001"));
-        db.addRecipe(new Recipe(2, "Cereal", "0002"));
-        db.addRecipe(new Recipe(3, "Toast", "0003"));
-        db.addRecipe(new Recipe(4, "Scrambled Eggs", "0004"));
+        db.addRecipe(new Recipe(1, "PB&J", 1));
+        db.addRecipe(new Recipe(2, "Cereal", 2));
+        db.addRecipe(new Recipe(3, "Toast", 3));
+        db.addRecipe(new Recipe(4, "Scrambled Eggs", 4));
 
         Log.d("Reading: ", "Reading all recipes ..");
         List<Recipe> recipes = db.getAllRecipes();
