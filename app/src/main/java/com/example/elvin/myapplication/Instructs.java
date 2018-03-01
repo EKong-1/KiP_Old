@@ -19,7 +19,6 @@ public class Instructs {
         this.instructID = instructID;
         this.instructList = new ArrayList<String>();
         this.timeStampList = new ArrayList<Integer>();
-
     }
     public Instructs(int instructID, String[] instr, Integer[] times) {
         this.instructID = instructID;
@@ -34,6 +33,15 @@ public class Instructs {
     public void addInstruct(String i, int tS) {
         this.instructList.add(i);
         this.timeStampList.add(tS);
+    }
+    public void insertInstruct(String i, int tS, int pos) {
+        this.instructList.add(pos, i);
+        this.timeStampList.add(pos, tS);
+    }
+
+    public void removeInstruct(int pos) {
+        this.instructList.remove(pos);
+        this.timeStampList.remove(pos);
     }
 
     public int getInstructID() {
