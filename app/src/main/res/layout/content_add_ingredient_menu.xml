@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="test1.kip_test.AddIngredientMenu"
     tools:showIn="@layout/activity_add_ingredient_menu">
 
     <EditText
@@ -40,7 +39,7 @@
         app:layout_constraintTop_toBottomOf="@+id/EnterIngredientName" />
 
     <Button
-        android:id="@+id/Add Ing Done"
+        android:id="@+id/add_ing_done"
         android:layout_width="161dp"
         android:layout_height="134dp"
         android:layout_marginBottom="8dp"
@@ -50,11 +49,11 @@
         android:text="@string/return_ingSelect"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/Add Ing Again"
+        app:layout_constraintStart_toEndOf="@+id/add_ing_again"
         app:layout_constraintTop_toBottomOf="@+id/EnterIngredientMass" />
 
     <Button
-        android:id="@+id/Add Ing Again"
+        android:id="@+id/add_ing_again"
         android:layout_width="161dp"
         android:layout_height="134dp"
         android:layout_marginBottom="8dp"
@@ -63,7 +62,7 @@
         android:layout_marginTop="8dp"
         android:text="@string/add_ing_again"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Add Ing Done"
+        app:layout_constraintEnd_toStartOf="@+id/add_ing_done"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/EnterIngredientMass" />
 </android.support.constraint.ConstraintLayout>
