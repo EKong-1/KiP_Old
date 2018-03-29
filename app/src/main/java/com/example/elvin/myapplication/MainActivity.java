@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,9 +26,17 @@ public class MainActivity extends AppCompatActivity {
         db.onUpgrade(db.getWritableDatabase(), 0, 1);
         Log.d("Insert: ", "Inserting ..");
         db.addRecipe(new Recipe(1, "PB&J", 1));
+        db.addInstruct(new Instructs(1,1, new ArrayList<String>(Arrays.asList("Spread peanut butter", "Spread jelly",
+                "Place slices together.")), new ArrayList<Integer>(Arrays.asList(0, 10, 20))));
         db.addRecipe(new Recipe(2, "Cereal", 2));
+        db.addInstruct(new Instructs(2,2, new ArrayList<String>(Arrays.asList("Pour Milk", "Pour cereal")),
+                new ArrayList<Integer>(Arrays.asList(0, 8))));
         db.addRecipe(new Recipe(3, "Toast", 3));
+        db.addInstruct(new Instructs(3,3, new ArrayList<String>(Arrays.asList("Place bread in toaster", "Take toast out")),
+                new ArrayList<Integer>(Arrays.asList(0, 30))));
         db.addRecipe(new Recipe(4, "Scrambled Eggs", 4));
+        db.addInstruct(new Instructs(4,1, new ArrayList<String>(Arrays.asList("Crack eggs and beat in bowl", "Pour oil on pan and let it heat",
+                "Pour in eggs, stirring frequently", "Take out eggs and place on plate")), new ArrayList<Integer>(Arrays.asList(0, 60, 80, 110))));
 
         Log.d("Reading: ", "Reading all recipes ..");
         List<Recipe> recipes = db.getAllRecipes();

@@ -9,6 +9,7 @@ import java.util.Arrays;
 // Change time stamps to int (seconds)
 
 public class Instructs {
+    private int ID;
     private int instructID;
     private ArrayList<String> instructList;
     private ArrayList<Integer> timeStampList;
@@ -16,14 +17,16 @@ public class Instructs {
 
     public Instructs() {}
     public Instructs(int instructID) {
+        this.ID = -1;
         this.instructID = instructID;
         this.instructList = new ArrayList<String>();
         this.timeStampList = new ArrayList<Integer>();
     }
-    public Instructs(int instructID, String[] instr, Integer[] times) {
+    public Instructs(int ID, int instructID, ArrayList<String> instr, ArrayList<Integer> times) {
+        this.ID = ID;
         this.instructID = instructID;
-        this.instructList = new ArrayList<String>(Arrays.asList(instr));
-        this.timeStampList = new ArrayList<Integer>(Arrays.asList(times));
+        this.instructList = instr;
+        this.timeStampList = times;
 
     }
 
@@ -44,6 +47,7 @@ public class Instructs {
         this.timeStampList.remove(pos);
     }
 
+    public int getID(){return this.ID;}
     public int getInstructID() {
         return this.instructID;
     }

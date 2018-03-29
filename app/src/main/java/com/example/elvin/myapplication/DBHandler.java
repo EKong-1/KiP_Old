@@ -21,9 +21,11 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TABLE_RECIPES = "recipes";
     private static final String TABLE_INSTRUCTS = "instructs";
     // Recipe Table Columns names
-    private static final String KEY_ID = "id";
     private static final String KEY_NAME = "name";
     private static final String KEY_INSTRUCT_ID = "instruct_id";
+
+    private static final String KEY_ID = "id";
+
     // Instruction Table Column names
     private static final String KEY_INSTRUCTION = "instruction";
     private static final String KEY_TIME_STAMP = "time_stamp";
@@ -33,14 +35,19 @@ public class DBHandler extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_RECIPE_TABLE = "CREATE TABLE " + TABLE_RECIPES + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
+        String CREATE_RECIPE_TABLE =
+                "CREATE TABLE " + TABLE_RECIPES + "("
+                + KEY_ID + " INTEGER PRIMARY KEY,"
+                + KEY_NAME + " TEXT,"
                 + KEY_INSTRUCT_ID + " INTEGER" + ")";
 
-        String CREATE_INSTRUCTS_TABLE = "CREATE TABLE " + TABLE_INSTRUCTS + "("
-                + KEY_INSTRUCT_ID + " INTEGER PRIMARY KEY," + KEY_INSTRUCTION + " TEXT,"
-                + KEY_TIME_STAMP + " INTEGER,FOREGIN KEY(" + KEY_INSTRUCT_ID +") REFERENCES "
-                + TABLE_RECIPES + "(" + KEY_INSTRUCT_ID + "))";
+        String CREATE_INSTRUCTS_TABLE =
+                "CREATE TABLE " + TABLE_INSTRUCTS + "("
+                + KEY_ID + " INTEGER,"
+                + KEY_INSTRUCT_ID + " INTEGER,"
+                + KEY_INSTRUCTION + " TEXT,"
+                + KEY_TIME_STAMP + " INTEGER," +
+                "FOREIGN KEY(" + KEY_INSTRUCT_ID +") REFERENCES " + TABLE_RECIPES + "(" + KEY_INSTRUCT_ID + "))";
 
         db.execSQL(CREATE_RECIPE_TABLE);
         db.execSQL(CREATE_INSTRUCTS_TABLE);
@@ -58,12 +65,14 @@ public class DBHandler extends SQLiteOpenHelper {
     public void addInstruct(Instructs instruct) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        int id = instruct.getInstructID();
+        int id = instruct.getID();
+        int InsId = instruct.getInstructID();
         ArrayList<String> ins = instruct.getInstructs();
         ArrayList<Integer> times = instruct.getTimes();
 
         for (int i = 0; i < ins.size(); i++) {
-            values.put(KEY_INSTRUCT_ID, id);
+            values.put(KEY_ID, id);
+            values.put(KEY_INSTRUCT_ID, InsId);
             values.put(KEY_INSTRUCTION, ins.get(i));
             values.put(KEY_TIME_STAMP, times.get(i));
             db.insert(TABLE_INSTRUCTS, null, values);
@@ -75,6 +84,7 @@ public class DBHandler extends SQLiteOpenHelper {
     public void addRecipe(Recipe recipe) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
+        values.put(KEY_ID, recipe.getId()); // Recipe ID
         values.put(KEY_NAME, recipe.getName()); // Recipe Name
         values.put(KEY_INSTRUCT_ID, recipe.getInstructID()); // ID that points to Recipe Instructions
         // Inserting Row
@@ -85,7 +95,7 @@ public class DBHandler extends SQLiteOpenHelper {
     // Getting Instructions for one Recipe by instuct_id
     public Instructs getInstructs(int instruct_id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_INSTRUCTS, new String[] {KEY_INSTRUCT_ID, KEY_INSTRUCTION, KEY_TIME_STAMP},
+        Cursor cursor = db.query(TABLE_INSTRUCTS, new String[] {KEY_ID, KEY_INSTRUCT_ID, KEY_INSTRUCTION, KEY_TIME_STAMP},
                 KEY_INSTRUCT_ID + "=?", new String[] {String.valueOf(instruct_id)},
                 null, null, null, null);
         if (cursor != null) {
